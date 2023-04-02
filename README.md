@@ -4,11 +4,11 @@
 <br/>
 :wave: Hello and welcome to the Pixie project. <br/>
 :eyes: The vision is to create a verbose skeleton project that can be used to jumpstart app ideas. <br/>
-:clock: This will save time that would usually be spent initializing React, Express, nodeJS and Mongo, as well as setting up a test suite.
+:hourglass: This will save time that would usually be spent initializing React, Express, nodeJS and Mongo, as well as setting up a test suite.<br/>
 :crystal_ball:As the project continues to grow, I hope to add more features such as:
 
-- authentication suite
+- an authentication suite
 - a deployment pipeline
 - hosting instructions
-- Sample README.
+- a sample README. <br/>
   Bon voyage!
