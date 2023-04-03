@@ -19,7 +19,7 @@ const StudentForm = (props) => {
     <div className="form-wrapper">
       <Formik {...props} validationSchema={validationSchema}>
         <Form>
-          <FormGroup>
+          <FormGroup className="wrapper">
             <FormLabel>Name</FormLabel>
             <Field name="name" type="text" className="form-control" />
             <ErrorMessage
@@ -37,7 +37,7 @@ const StudentForm = (props) => {
               component="span"
             />
           </FormGroup>
-          <FormGroup>
+          <FormGroup className="wrapper">
             <FormLabel>Number</FormLabel>
 
             <Field name="rollno" type="number" className="form-control" />
@@ -47,7 +47,7 @@ const StudentForm = (props) => {
               component="span"
             />
           </FormGroup>
-          <Button variant="danger" size="lg" block="block" type="submit">
+          <Button variant="light" size="lg" block="block" type="submit">
             {props.children}
           </Button>
         </Form>

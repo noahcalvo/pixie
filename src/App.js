@@ -3,10 +3,8 @@ import React from "react";
 
 // Import Bootstrap
 import { Nav, Navbar, Container, Row, Col } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.css";
-
-// Import Custom CSS
-import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./pixie.css";
 
 // Import from react-router-dom
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
@@ -22,11 +20,14 @@ const App = () => {
     <Router>
       <div className="App">
         <header className="App-header">
-          <Navbar bg="dark" variant="dark">
+          <Navbar bg="light" variant="dark">
             <Container>
               <Navbar.Brand>
                 <Link to={"/create-student"} className="nav-link">
-                  React MERN Stack App
+                  Pixie{" "}
+                  <span role="img" aria-label="fairy">
+                    🧚
+                  </span>
                 </Link>
               </Navbar.Brand>
 
