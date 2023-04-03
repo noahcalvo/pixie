@@ -10,7 +10,7 @@ router.post("/create-student", async (req, res) => {
   try {
     const result = await studentSchema.create(req.body);
     console.log(result);
-    res.json(result);
+    res.status(201).json(result);
   } catch (e) {
     console.log(e);
   }
@@ -33,7 +33,7 @@ router
   .get(async (req, res) => {
     try {
       const student = await studentSchema.findById(req.params.id);
-      res.json(student);
+      res.status(200).json(student);
       console.log(student);
     } catch (error) {
       console.log(error);
@@ -46,7 +46,7 @@ router
       const student = await studentSchema.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
-      res.json(student);
+      res.status(204).json(student);
       console.log(student);
     } catch (error) {
       console.log(error);
