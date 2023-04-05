@@ -12,5 +12,3 @@
 - hosting instructions
 - a sample README. <br/>
   Bon voyage!
-
-test
