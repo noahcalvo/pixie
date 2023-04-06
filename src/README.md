@@ -2,15 +2,16 @@
 
 <img src="https://static.wikia.nocookie.net/zelda/images/f/f3/Ciela_Artwork.png/" alt="Toonlink blue pixie companion" width="251" height="266">
 <br/>
-Hello and welcome to the Pixie project. <br/>
-The vision is to create a verbose skeleton project that can be used to jumpstart app ideas. <br/>
-This will save time that would usually be spent initializing React, Express, nodeJS and Mongo, as well as setting up a test suite.<br/>
-As the project continues to grow, I hope to add more features such as:
+:wave: Hello and welcome to the Pixie project. <br/>
+:eyes: The vision is to create a verbose skeleton project that can be used to jumpstart app ideas. <br/>
+:hourglass: This will save time that would usually be spent initializing React, Express, nodeJS and Mongo, as well as setting up a test suite.<br/>
+:crystal_ball:As the project continues to grow, I hope to add more features such as:
 
 - an authentication suite
 - a deployment pipeline
 - hosting instructions
-- a sample README. Bon voyage!
+- a sample README. <br/>
+  Bon voyage!
 
 ## Hosting Instructions
 
@@ -21,5 +22,3 @@ As the project continues to grow, I hope to add more features such as:
 5. In the apps root directory, run `firebase init`
 6. Select hosting options. For a MERN stack app with authentication, you'll likely only need Firebase Hosting. I also set up Github actions for deployments.
 7. Run `npm run build` and then `firebase deploy`. Now you should see the app at the domain provided by Firebase!!
-   <br/>
-   <br/>
