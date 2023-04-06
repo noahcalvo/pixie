@@ -23,4 +23,12 @@ As the project continues to grow, I hope to add more features such as:
 7. Run `npm run build` and then `firebase deploy`. Now you should see the app at the domain provided by Firebase!!
    <br/>
    <br/>
-Boom.
+
+## Getting preview deployments working on PR
+
+1. This is something you may have already started setting up during Hosting Instructions
+2. There was an additional step to take. In Github, go to your repo's settings>actions>General>workflow permissions and choose the first option 'Read and write permission' and then the checkbox 'Allow GitHub Actions to create and approve pull requests'.<br/>
+   You will now get a comment on every PR to main, providing a link to a preview ephemeral to test the new code. Based.
+
+<br/>
+<br/>
