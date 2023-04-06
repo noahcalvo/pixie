@@ -23,3 +23,4 @@ As the project continues to grow, I hope to add more features such as:
 7. Run `npm run build` and then `firebase deploy`. Now you should see the app at the domain provided by Firebase!!
    <br/>
    <br/>
+Boom.
