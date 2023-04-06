@@ -13,9 +13,15 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import CreateStudent from "./Components/create-student.component";
 import EditStudent from "./Components/edit-student.component";
 import StudentList from "./Components/student-list.component";
+import AboutPage from "./Components/about-page.component";
+import GoogleSignInButton from "./Components/google-sign-in-button";
+
+// Import Firebase and Auth logic
+import useAuth from "./useAuth";
 
 // App Component
 const App = () => {
+  const { user, signInWithGoogle, signOut } = useAuth();
   return (
     <Router>
       <div className="App">
@@ -43,6 +49,19 @@ const App = () => {
                     Student List
                   </Link>
                 </Nav>
+
+                <Nav>
+                  <Link to={"/info"} className="nav-link">
+                    About Page
+                  </Link>
+                </Nav>
+                <Nav>
+                  <GoogleSignInButton
+                    signIn={signInWithGoogle}
+                    user={user}
+                    signOut={signOut}
+                  />
+                </Nav>
               </Nav>
             </Container>
           </Navbar>
@@ -57,6 +76,7 @@ const App = () => {
                   <Route path="/create-student" element={<CreateStudent />} />
                   <Route path="/edit-student/:id" element={<EditStudent />} />
                   <Route path="/student-list" element={<StudentList />} />
+                  <Route path="/info" element={<AboutPage />} />
                 </Routes>
               </div>
             </Col>
