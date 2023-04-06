@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start": "cp README.md src/ && react-scripts start",
-    "build": "cp README.md src/ && react-scripts build",
+    "build": "cp README.md src/ && sass scss/pixie.scss src/pixie.css && react-scripts build",
     "eject": "react-scripts eject",
     "sass": "sass scss/pixie.scss src/pixie.css"
   },
