@@ -26,20 +26,16 @@ function useAuth() {
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleAuthProvider)
       .then((result) => {
+        console.log(result);
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = googleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        // const credential = googleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
         // The signed-in user info.
-        const user = result.user;
+        // const user = result.user;
       })
       .catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = googleAuthProvider.credentialFromError(error);
+        console.log(error);
       });
   };
 
