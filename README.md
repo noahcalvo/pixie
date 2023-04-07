@@ -32,3 +32,14 @@ As the project continues to grow, I hope to add more features such as:
 
 <br/>
 <br/>
+
+## Setting up your mongo database
+
+1. Sign in/sign up for a mongodb Atlas account https://www.mongodb.com/cloud/atlas
+2. Create a project, then create a database (I use the free tier)
+3. Set up a user, within database access that has the correct privledges (read/write, or Admin). Save the password to this user somewhere.
+4. Whitelist the IP you will be connecting from. With the free tier of Firebase hosting, the IP can change dynamically from different CDNs, so I chose to allow connections from anywhere.
+5. Setting up encryption with Google Cloud KMS costs money, so I skip the encryption step.
+6. Go to Deployment>Database>Connect, select connect my app, and copy the connection string.
+7. In backend/.env, add `DATABASE_STRING = "your db string"`
+8. Add the database string in your repo settings, Secrets>Actions, and title it DATABASE_STRING. This way it will be added as env during automated deployments.

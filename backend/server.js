@@ -1,5 +1,4 @@
 let mongoose = require("mongoose");
-let dbConfig = require("./database/db");
 
 // Import app.js
 let app = require("./app");
@@ -8,7 +7,8 @@ let app = require("./app");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 4000;
-const MONGODB_URI = dbConfig.db || "mongodb://localhost/todoapiDB";
+const MONGODB_URI =
+  process.env.DATABASE_STRING || "mongodb://localhost/todoapiDB";
 
 // Connecting MongoDB Database
 mongoose

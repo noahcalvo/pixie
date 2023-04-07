@@ -14,7 +14,6 @@ const StudentForm = (props) => {
       .integer("Invalid roll number")
       .required("Required"),
   });
-  console.log(props);
   return (
     <div className="form-wrapper">
       <Formik {...props} validationSchema={validationSchema}>
