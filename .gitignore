@@ -16,6 +16,9 @@
 # production
 /build
 
+# generated README
+src/README.md
+
 # env
 .env.local
 .env.development.local

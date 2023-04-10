@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 4000;
 const MONGODB_URI =
   process.env.DATABASE_STRING || "mongodb://localhost/todoapiDB";
 
+console.log(MONGODB_URI);
 // Connecting MongoDB Database
 mongoose
   .connect(MONGODB_URI, { useNewUrlParser: true })
