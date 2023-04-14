@@ -2,7 +2,7 @@
 
 // Import Modules
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api";
 import StudentForm from "./StudentForm";
 
 // CreateStudent Component
@@ -14,8 +14,8 @@ const CreateStudent = () => {
   });
   // onSubmit handler
   const onSubmit = async (studentObject) => {
-    axios
-      .post("http://localhost:4000/students/create-student", studentObject)
+    api
+      .post("/students/create-student", studentObject)
       .then((res) => {
         if (res.status === 201) alert("Student successfully created");
         else

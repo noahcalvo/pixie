@@ -58,3 +58,7 @@ gcloud run deploy my-backend --image gcr.io/<PROJECT_ID>/my-backend --platform m
 ```
 
 If you're running into errors here, it can be good to try running it locally before sending it to GCP. For that you need Docker installed and running, and then run the command `gcloud beta code dev`
+
+If you are on a work computer without vanilla Docker (like me), update the backend/cloudbuild.yaml file and run
+`gcloud builds submit --config cloudbuild.yaml .`
+cloudbuild is a good idea in general cause it provides a consistent build environment and allows for automation pipelines. This is all set up in the backend/package.json. You will need to update the project-ID to yours.

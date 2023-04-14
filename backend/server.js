@@ -6,7 +6,7 @@ let app = require("./app");
 /* Loading the environment variables from the .env file. */
 require("dotenv").config();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8080;
 const MONGODB_URI =
   process.env.DATABASE_STRING || "mongodb://localhost/todoapiDB";
 

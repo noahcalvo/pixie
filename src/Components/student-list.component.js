@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api";
 import { Table } from "react-bootstrap";
 import StudentTableRow from "./StudentTableRow";
 
@@ -7,8 +7,8 @@ const StudentList = () => {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/students/")
+    api
+      .get("/students/")
       .then(({ data }) => {
         setStudents(data);
       })

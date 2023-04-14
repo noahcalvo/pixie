@@ -2,7 +2,7 @@
 
 // Import Modules
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api";
 import StudentForm from "./StudentForm";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -18,8 +18,8 @@ const EditStudent = (props) => {
 
   //onSubmit handler
   const onSubmit = (studentObject) => {
-    axios
-      .put("http://localhost:4000/students/update-student/" + id, studentObject)
+    api
+      .put("/students/update-student/" + id, studentObject)
       .then((res) => {
         if (res.status === 204) {
           alert("Student successfully updated");
@@ -32,8 +32,8 @@ const EditStudent = (props) => {
 
   // Load data from server and reinitialize student form
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/students/update-student/" + id)
+    api
+      .get("/students/update-student/" + id)
       .then((res) => {
         const { name, email, rollno } = res.data;
         setFormValues({ name, email, rollno });
