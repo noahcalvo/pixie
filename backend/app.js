@@ -3,7 +3,7 @@ let cors = require("cors");
 let bodyParser = require("body-parser");
 
 // Express Routes
-const studentRoute = require("../backend/routes/student.route");
+const studentRoute = require("./routes/student.route");
 
 // Create the express app
 const app = express();
