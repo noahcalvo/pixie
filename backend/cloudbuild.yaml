@@ -1,0 +1,13 @@
+# I had to imploy this strategy of cloudbuild because work computer I'm coding on doesn't have
+# access to docker command. You can safely delete this and use
+# docker build -t gcr.io/<your_project_id>/my-backend .
+# docker push gcr.io/<your_project_id>/my-backend
+# before each deploy.
+
+steps:
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["install"]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/piixie/my-backend", "."]
+images:
+  - "gcr.io/piixie/my-backend"

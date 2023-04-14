@@ -33,3 +33,33 @@ As the project continues to grow, I hope to add more features such as:
 
 <br/>
 <br/>
+
+## Setting up your mongo database
+
+1. Sign in/sign up for a mongodb Atlas account https://www.mongodb.com/cloud/atlas
+2. Create a project, then create a database (I use the free tier)
+3. Set up a user, within database access that has the correct privledges (read/write, or Admin). Save the password to this user somewhere.
+4. Whitelist the IP you will be connecting from. With the free tier of Firebase hosting, the IP can change dynamically from different CDNs, so I chose to allow connections from anywhere.
+5. Setting up encryption with Google Cloud KMS costs money, so I skip the encryption step.
+6. Go to Deployment>Database>Connect, select connect my app, and copy the connection string.
+7. In backend/.env, add `DATABASE_STRING = "your db string"`
+8. Add the database string in your repo settings, Secrets>Actions, and title it DATABASE_STRING. This way it will be added as env during automated deployments.
+
+## Connecting your backend in the cloud
+
+1. You've got to host the backend seperately, because firebase is for hosting static web pages. For this, navigate to cloud.google.com (google cloud providers). Unfortunately, I had to add a billing account. I plan to stay under free usage tier, but they require billing info for the access we require on GCP.
+2. Click on your project (mine is "pixie"). Navigate to APIs and Services dashboard and enable Cloud Build API and Cloud Run API
+3. Install the Google Cloud CLI, simply explained here https://cloud.google.com/sdk/docs/install. Note that once you install and expand the download, you must add it to PATH, in your shell profile file (e.g., ~/.bashrc, ~/.bash_profile, ~/.zshrc, etc.):
+   `export PATH="/path/to/google-cloud-sdk/bin:$PATH"` - replacing /path/to/google-cloud-sdk with the location you exanded it to. Now `gcloud` in the shell should work.
+4. Navigate to the `backend` folder, and run
+
+```
+gcloud builds submit --tag gcr.io/<PROJECT_ID>/my-backend
+gcloud run deploy my-backend --image gcr.io/<PROJECT_ID>/my-backend --platform managed --allow-unauthenticated
+```
+
+If you're running into errors here, it can be good to try running it locally before sending it to GCP. For that you need Docker installed and running, and then run the command `gcloud beta code dev`
+
+If you are on a work computer without vanilla Docker (like me), update the backend/cloudbuild.yaml file and run
+`gcloud builds submit --config cloudbuild.yaml .`
+cloudbuild is a good idea in general cause it provides a consistent build environment and allows for automation pipelines. This is all set up in the backend/package.json. You will need to update the project-ID to yours.
