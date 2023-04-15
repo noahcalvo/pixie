@@ -39,3 +39,5 @@ firebase-debug.log
 # package-locks (not commiting them because they contain target repos where dependencys are gathered from.
 package-lock.json
 /backend/package-lock.json
+
+What is Detekt? Can I run it on my own code?
