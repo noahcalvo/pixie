@@ -1,31 +1,28 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+/frontend/node_modules
+/frontend/.pnp
+/frontend/.pnp.js
 /backend/node_modules
 
 # generated scss
-/src/pixie.css
-/src/pixie.css.map
-
-# testing
-/coverage
+/frontend/src/pixie.css
+/frontend/src/pixie.css.map
 
 # production
-/build
+/frontend/build
 
 # generated README
-src/README.md
+/frontend/src/README.md
 
 # env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+/frontend/.env.local
+/frontend/.env.development.local
+/frontend/.env.test.local
+/frontend/.env.production.local
 /backend/.env
-.env
+/frontend/.env
 
 
 # misc
@@ -37,5 +34,5 @@ yarn-error.log*
 firebase-debug.log
 
 # package-locks (not commiting them because they contain target repos where dependencys are gathered from.
-package-lock.json
+/frontend/package-lock.json
 /backend/package-lock.json
