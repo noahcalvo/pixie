@@ -13,7 +13,10 @@ jobs:
         run: cd frontend
       # TODO: Replace npm install with npm ci once there is a stable package-lock.json and it is removed from .gitignore
       - name: Install dependencies and build frontend code
-        run: npm install && npm run build
+        run: |
+          ls
+          npm install
+          npm run build
         env:
           DATABASE_STRING: ${{ secrets.DATABASE_STRING }}
           REACT_APP_API_BASE_URL: ${{ vars.REACT_APP_API_BASE_URL }}
