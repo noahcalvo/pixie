@@ -1,8 +1,9 @@
 # Pixie
 
-<img src="https://static.wikia.nocookie.net/zelda/images/f/f3/Ciela_Artwork.png/" alt="Toonlink blue pixie companion" width="251" height="266">
+<img src="https://static.wikia.nocookie.net/zelda/images/f/f3/Ciela_Artwork.png/" alt="Toonlink blue pixie companion" width="251" height="266" style="margin:20px">
 <br/>
-https://piixie.web.app/ <br/>
+<a href="https://piixie.web.app/">piixie.web.app/</a>
+<br/>
 Hello and welcome to the Pixie project. <br/>
 The vision is to create a verbose skeleton project that can be used to jumpstart app ideas. <br/>
 This will save time that would usually be spent initializing React, Express, nodeJS and Mongo, as well as setting up a test suite.<br/>
