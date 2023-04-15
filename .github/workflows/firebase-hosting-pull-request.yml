@@ -11,11 +11,8 @@ jobs:
       - uses: actions/checkout@v3
       # TODO: Replace npm install with npm ci once there is a stable package-lock.json and it is removed from .gitignore
       - name: Install dependencies and build frontend code
-        run: |
-          cd frontend
-          ls
-          npm install
-          npm run build
+        working-directory: frontend
+        run: npm install && npm run build
         env:
           DATABASE_STRING: ${{ secrets.DATABASE_STRING }}
           REACT_APP_API_BASE_URL: ${{ vars.REACT_APP_API_BASE_URL }}
@@ -24,3 +21,4 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PIIXIE }}"
           projectId: piixie
+        working-directory: frontend
