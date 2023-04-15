@@ -11,7 +11,7 @@
 /frontend/src/pixie.css.map
 
 # production
-/frontend/build
+/build
 
 # generated README
 /frontend/src/README.md
