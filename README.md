@@ -2,7 +2,7 @@
 
 <img src="https://static.wikia.nocookie.net/zelda/images/f/f3/Ciela_Artwork.png/" alt="Toonlink blue pixie companion" width="251" height="266" style="margin:20px">
 <br/>
-<a href="https://piixie.web.app/">piixie.web.app/</a>
+<a href="https://piixie.web.app/">piixie.web.app</a>
 <br/>
 Hello and welcome to the Pixie project. <br/>
 The vision is to create a verbose skeleton project that can be used to jumpstart app ideas. <br/>
