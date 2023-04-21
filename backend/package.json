@@ -9,6 +9,12 @@
     "dev": "nodemon server.js",
     "deploy": "gcloud builds submit --config cloudbuild.yaml . && gcloud run deploy my-backend --image gcr.io/piixie/my-backend --platform managed --allow-unauthenticated"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "<rootDir>/tests/**/*.test.js"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -25,6 +31,7 @@
     "@testing-library/user-event": "^14.4.3",
     "cross-env": "^7.0.3",
     "jest": "^29.5.0",
+    "mongodb-memory-server": "^8.12.2",
     "nodemon": "^2.0.22",
     "supertest": "^6.3.3"
   }
