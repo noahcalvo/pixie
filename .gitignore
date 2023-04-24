@@ -6,15 +6,16 @@
 /frontend/.pnp.js
 /backend/node_modules
 
-# generated scss
+# generated files
+/frontend/public/README.md
 /frontend/src/pixie.css
 /frontend/src/pixie.css.map
+/frontend/.next
 
 # production
 /build
 
 # generated README
-/frontend/src/README.md
 
 # env
 /frontend/.env.local
