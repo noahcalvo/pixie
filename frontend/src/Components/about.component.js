@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { parse } from "marked";
 
-function AboutPage() {
+function About() {
   const [readme, setReadme] = useState("");
 
   useEffect(() => {
@@ -19,4 +19,4 @@ function AboutPage() {
   );
 }
 
-export default AboutPage;
+export default About;

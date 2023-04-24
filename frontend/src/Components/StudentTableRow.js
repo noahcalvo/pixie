@@ -15,7 +15,7 @@ const StudentTableRow = (props) => {
           window.location.reload();
         } else Promise.reject();
       })
-      .catch((err) => alert("Something went wrong"));
+      .catch((err) => alert("Something went wrong: " + err));
   };
 
   return (

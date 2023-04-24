@@ -20,3 +20,15 @@ $theme-colors: (
 header {
     margin-bottom: 30px;
 }
+
+.button-link {
+  text-decoration: none;
+};
+
+.brand-link {
+  color: white !important;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.848) !important;
+  }
+}
