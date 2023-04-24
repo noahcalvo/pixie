@@ -24,7 +24,9 @@ const StudentTableRow = (props) => {
       <td>{email}</td>
       <td>{rollno}</td>
       <td>
-        <Link href={`/edit-student/${_id}`}>Edit</Link>
+        <Link href={`/edit-student/${_id}`} passHref>
+          Edit
+        </Link>
         <Button onClick={deleteStudent} size="sm" variant="danger">
           Delete
         </Button>
