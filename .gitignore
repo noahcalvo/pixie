@@ -18,13 +18,9 @@
 # generated README
 
 # env
-/frontend/.env.local
-/frontend/.env.development.local
-/frontend/.env.test.local
-/frontend/.env.production.local
 /backend/.env
-/frontend/.env
-
+frontend/.env.production
+frontend/.env.development
 
 # misc
 .DS_Store
