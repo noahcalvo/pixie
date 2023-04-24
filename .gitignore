@@ -15,8 +15,6 @@
 # production
 /build
 
-# generated README
-
 # env
 /backend/.env
 frontend/.env.production

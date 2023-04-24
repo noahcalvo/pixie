@@ -1,7 +1,7 @@
 // CreateStudent Component for add new student
 
 // Import Modules
-import React, { useState } from "react";
+import React from "react";
 import api from "../api";
 import StudentForm from "./StudentForm";
 

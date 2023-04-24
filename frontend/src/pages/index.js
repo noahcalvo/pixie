@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Nav, Navbar, Container, Row, Col } from "react-bootstrap";
 import dynamic from "next/dynamic";
-import GoogleSignInButton from "../components/google-sign-in-button";
+import GoogleSignInButton from "../Components/google-sign-in-button";
 import useAuth from "../useAuth";
 
 const CreateStudent = dynamic(() =>
