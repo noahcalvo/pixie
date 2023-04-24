@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { parse } from "marked";
-import readmePath from "../README.md";
 
 function AboutPage() {
   const [readme, setReadme] = useState("");
 
   useEffect(() => {
-    fetch(readmePath)
+    fetch("/README.md")
       .then((response) => response.text())
       .then((text) => {
         setReadme(parse(text));

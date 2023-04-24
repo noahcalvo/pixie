@@ -7,11 +7,11 @@ import StudentForm from "./StudentForm";
 
 // CreateStudent Component
 const CreateStudent = () => {
-  const [formValues] = useState({
+  const formValues = {
     name: "",
     email: "",
     rollno: "",
-  });
+  };
   // onSubmit handler
   const onSubmit = async (studentObject) => {
     api
