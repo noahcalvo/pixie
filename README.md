@@ -13,6 +13,7 @@ As the project continues to grow, I hope to add more features such as:
 - a deployment pipeline
 - hosting instructions
 - a sample README. Bon voyage!
+- GPT PR review bot integration
 
 ## Running Locally
 
