@@ -52,7 +52,7 @@ The package.json's are set up to run locally.
 6. For whitelisting IPs, I've chosen to allow all IPs access. This is an option in the project settings, not cluster.
 7. Go to Deployment>Database>Connect, select connect my app, and copy the connection string.
 8. In backend/.env, add `DATABASE_STRING = "your db string"`
-9. If you want to add a dev database as well, to play with data without affecting prod, repeat steps 2-6 and create a backend/.env.development with the DATABASE_STRING value.
+9. If you want to add a dev database as well, to play with data without affecting prod, repeat steps 2-6 and create a backend/.env.development with the DATABASE_STRING value. You will need to create a new project if you want to create another free m0 cluster, because mongo only allows 1 m0 cluster per project.
 10. Add the (prod) database string in your repo settings, Secrets>Actions, and title it DATABASE_STRING. This way it will be added as env during automated deployments. If you're curious how this works, check out the firebase scripts in .github/workflows/
 
 ## Connecting your backend in the cloud
