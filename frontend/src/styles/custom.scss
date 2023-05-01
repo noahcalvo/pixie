@@ -32,3 +32,14 @@ header {
     color: rgba(255, 255, 255, 0.848) !important;
   }
 }
+
+.sign-in-display {
+  display: flex;
+  align-items: center;
+}
+
+.display-name {
+  margin-bottom: 0;
+  margin-right: 8px;
+  color: white;
+}

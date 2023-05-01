@@ -32,7 +32,6 @@
     "start": "next start",
     "build": "cp ../README.md public/ && next build",
     "eject": "react-scripts eject",
-    "sass": "sass scss/pixie.scss src/pixie.css",
     "dev": "cp ../README.md public/ && next dev"
   },
   "eslintConfig": {
