@@ -1,7 +1,9 @@
-import About from "../Components/about.component";
+import dynamic from "next/dynamic";
 
-function AboutPage() {
+const About = dynamic(() => import("../components/about.component"), {
+  ssr: false,
+});
+
+export default function AboutPage() {
   return <About />;
 }
-
-export default AboutPage;

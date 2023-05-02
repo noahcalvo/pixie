@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, Navbar, Container } from "react-bootstrap";
 // import dynamic from "next/dynamic";
-import GoogleSignInButton from "../Components/google-sign-in-button";
+import GoogleSignInButton from "../components/google-sign-in-button";
 import useAuth from "../useAuth";
 import Link from "next/link";
 
