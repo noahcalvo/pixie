@@ -32,7 +32,7 @@ The package.json's are set up to run locally.
 5. In the apps root directory, run `firebase init`
 6. Select hosting options. For a MERN stack app with authentication, you'll likely only need Firebase Hosting. I also set up Github actions for deployments.
 7. Run `npm run build` and then `firebase deploy`. Now you should see the app at the domain provided by Firebase!!
-   <br/>
+8. See #Enabling SSR to learn how to serverside render the frontend. This is disabled by default because runnning a node.js server on google firebase costs extra :< <br/>
 
 ## Getting preview deployments working on PR
 
@@ -77,3 +77,17 @@ cloudbuild is a good idea in general cause it provides a consistent build enviro
 ## GCP configuration tips
 
 1. If you are like me and afraid of $100+ monthly bills from google, and the slightest excess usage past the free tier fires anxiety into you, Lifecycle management is your friend. The images that are uploaded during cloud build and deploy are put in the `artifacts.[google app id].appspot.com`, i.e. `artifacts.piixie.appspot.com` bucket. To add rules about deleting data from this bucket when it is no longer used, go to https://console.cloud.google.com/storage/lifecycle. Add a rule > delete object > number of newer versions > 1 (or whatever you like, to balance stability with cost).
+
+## Enabling SSR
+
+Enabling server-side rendering on your app is easy, but hosting it costs money, or further research I'm unwilling to do at the time. The changes lay primarily in the pages/ folder, where you will need to switch from using `next/dynamic` to import the components to simply importing them with normal js module import statements. For example, index.js would look like
+
+```
+import About from "./about";
+
+const HomePage = () => {
+  return <About />;
+};
+
+export default HomePage;
+```
