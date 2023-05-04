@@ -12,6 +12,7 @@ const nextConfig = {
 
     return config;
   },
+  // put the build in the build/ dir so that firebase knows where to find it.
   distDir: "build",
 };
 
