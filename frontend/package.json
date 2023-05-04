@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "next start",
-    "build": "cp ../README.md public/ && next build --outdir=build",
+    "build": "cp ../README.md public/ && next build",
     "eject": "react-scripts eject",
     "dev": "cp ../README.md public/ && next dev"
   },
