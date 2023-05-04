@@ -1,4 +1,9 @@
-module.exports = {
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
+  // produces the build as HTML/CSS/JS assets so plain firebase plan can host. Remove for SSR
+  output: "export",
   webpack: (config) => {
     config.module.rules.push({
       test: /\.md$/,
@@ -9,3 +14,5 @@ module.exports = {
   },
   distDir: "build",
 };
+
+module.exports = nextConfig;
