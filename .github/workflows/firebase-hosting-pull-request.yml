@@ -3,6 +3,10 @@
 
 name: Deploy to Firebase Hosting on PR
 "on": pull_request
+# define the env variables used in build and deploy
+env:
+  DATABASE_STRING: ${{ secrets.DATABASE_STRING }}
+  REACT_APP_API_BASE_URL: ${{ vars.REACT_APP_API_BASE_URL }}
 jobs:
   build_and_preview:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
@@ -13,13 +17,9 @@ jobs:
       - name: Install dependencies and build frontend code
         working-directory: frontend
         run: npm install && npm run build
-        env:
-          DATABASE_STRING: ${{ secrets.DATABASE_STRING }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PIIXIE }}"
           projectId: piixie
           entryPoint: frontend
-          env:
-            REACT_APP_API_BASE_URL: ${{ vars.REACT_APP_API_BASE_URL }}
