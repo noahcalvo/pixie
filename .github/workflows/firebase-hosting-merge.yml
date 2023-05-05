@@ -17,7 +17,7 @@ jobs:
         working-directory: frontend
         run: npm install && npm run build
         env:
-          DATABASE_STRING: ${{ secrets.DATABASE_STRING }}
+          DATABASE_STRING: ${{ secrets.DATABASE_STRING_DEV }}
           REACT_APP_API_BASE_URL: ${{ vars.REACT_APP_API_BASE_URL }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
