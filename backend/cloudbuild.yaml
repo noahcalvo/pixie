@@ -10,7 +10,7 @@ steps:
     args: ["install"]
     dir: "/workspace/backend" # Set the working directory for the npm step
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io$_PROJECT_ID/$_BACKEND_INSTANCE_NAME", "."]
+    args: ["build", "-t", "gcr.io/$_PROJECT_ID/$_BACKEND_INSTANCE_NAME", "."]
     dir: "/workspace/backend"
 images:
   - "gcr.io$_PROJECT_ID/$_BACKEND_INSTANCE_NAME"
