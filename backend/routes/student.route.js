@@ -25,6 +25,17 @@ router.get("/", async (_req, res) => {
   }
 });
 
+router.get("/db", async (_req, res) => {
+  try {
+    require("dotenv").config({ path: ".env.development" });
+    const MONGODB_URI =
+      process.env.DATABASE_STRING || "mongodb://localhost/todoapiDB";
+    return res.json(MONGODB_URI);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 // UPDATE student
 router
   .route("/update-student/:id")
