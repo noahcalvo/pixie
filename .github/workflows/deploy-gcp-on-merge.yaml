@@ -1,4 +1,4 @@
-name: Deploy to GCP ephemeral on PR for testing
+name: Deploy to GCP prod on merge
 on:
   push:
     branches:
