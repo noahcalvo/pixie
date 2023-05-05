@@ -18,6 +18,7 @@
 
 # env
 /backend/.env
+backend/.env.development
 frontend/.env.production
 frontend/.env.development
 

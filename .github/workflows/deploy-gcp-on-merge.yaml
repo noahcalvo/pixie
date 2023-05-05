@@ -1,0 +1,53 @@
+name: Deploy to GCP ephemeral on PR for testing
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "backend/**"
+jobs:
+  deploy-backend-ephemeral:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.3.0
+        with:
+          service_account_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PIIXIE }}
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set Ephemeral Environment Variables
+        run: |
+          echo "BACKEND_INSTANCE_NAME=my-backend-ephemeral-pr-${{ github.event.number }}" >> $GITHUB_ENV
+      - name: Build and push Docker image
+        run: |
+          gcloud builds submit --tag gcr.io/$GCP_PROJECT_ID/$BACKEND_INSTANCE_NAME
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy $BACKEND_INSTANCE_NAME \
+            --image gcr.io/$GCP_PROJECT_ID/$BACKEND_INSTANCE_NAME \
+            --platform managed \
+            --allow-unauthenticated
+      - name: Build and push Docker image
+        run: |
+          gcloud builds submit --tag gcr.io/$GCP_PROJECT_ID/$BACKEND_INSTANCE_NAME
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy $BACKEND_INSTANCE_NAME \
+            --image gcr.io/$GCP_PROJECT_ID/$BACKEND_INSTANCE_NAME \
+            --platform managed \
+            --allow-unauthenticated
+      - name: Get Ephemeral Backend URL
+        run: |
+          BACKEND_URL=$(gcloud run services describe $BACKEND_INSTANCE_NAME --platform managed --format 'value(status.url)')
+          echo "BACKEND_URL=$BACKEND_URL" >> $GITHUB_ENV
+
+      - name: Save Backend URL as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: backend-url
+          path: backend-url.txt
