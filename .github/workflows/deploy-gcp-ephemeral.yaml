@@ -23,7 +23,7 @@ jobs:
           echo "BACKEND_INSTANCE_NAME=my-backend-ephemeral-pr-${{ github.event.number }}" >> $GITHUB_ENV
       - name: Build and push Docker image
         run: |
-          gcloud builds submit --config backend/cloudbuild.yaml --substitutions=_BACKEND_INSTANCE_NAME=$BACKEND_INSTANCE_NAME,PROJECT_ID=$GCP_PROJECT_ID
+          gcloud builds submit --config backend/cloudbuild.yaml --substitutions=_BACKEND_INSTANCE_NAME=$BACKEND_INSTANCE_NAME,_PROJECT_ID=$GCP_PROJECT_ID
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy $BACKEND_INSTANCE_NAME \

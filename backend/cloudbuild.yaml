@@ -9,6 +9,6 @@ steps:
   - name: "gcr.io/cloud-builders/npm"
     args: ["install"]
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/$_BACKEND_INSTANCE_NAME", "."]
+    args: ["build", "-t", "gcr.io/$_PROJECT_ID/$_BACKEND_INSTANCE_NAME", "."]
 images:
   - "gcr.io/piixie/my-backend"
