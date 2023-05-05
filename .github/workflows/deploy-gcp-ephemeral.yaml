@@ -1,6 +1,6 @@
 name: Deploy to GCP ephemeral on PR for testing
 "on":
-  push:
+  pull_request:
     branches:
       - main
     paths:
