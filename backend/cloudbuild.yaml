@@ -13,4 +13,4 @@ steps:
     args: ["build", "-t", "gcr.io$_PROJECT_ID/$_BACKEND_INSTANCE_NAME", "."]
     dir: "/workspace/backend"
 images:
-  - "gcr.io/$_PROJECT_ID/$_BACKEND_INSTANCE_NAME"
+  - "gcr.io$_PROJECT_ID/$_BACKEND_INSTANCE_NAME"
