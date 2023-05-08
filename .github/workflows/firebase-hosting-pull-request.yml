@@ -9,15 +9,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Download Backend URL artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: backend-url-${{ github.event.number }}
+          path: backend_url
+
+      - name: Load Backend URL from artifact
+        run: |
+          BACKEND_URL=$(cat backend_url/backend_url.txt)
+          echo "BACKEND_URL=$BACKEND_URL" >> $GITHUB_ENV
+
       # TODO: Replace npm install with npm ci once there is a stable package-lock.json and it is removed from .gitignore
       - name: Install dependencies and build frontend code
         working-directory: frontend
         run: npm install && npm run build
         env:
-          # Database string is using DATABASE_STRING_DEV from github secrets. This can be changed to a prod url if you dont
-          # want to maintain a testing db
-          DATABASE_STRING: ${{ secrets.DATABASE_STRING_DEV }}
-          NEXT_PUBLIC_REACT_APP_API_BASE_URL: ${{ vars.REACT_APP_API_BASE_URL }}
+          NEXT_PUBLIC_REACT_APP_API_BASE_URL: ${{ env.BACKEND_URL }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"

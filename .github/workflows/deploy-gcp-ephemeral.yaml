@@ -35,13 +35,12 @@ jobs:
             --region us-central1 \
             --allow-unauthenticated \
             --set-env-vars DATABASE_STRING=${{ secrets.DATABASE_STRING }}
-      - name: Get Ephemeral Backend URL
+      - name: Get Ephemeral Backend URL and Save to File
         run: |
           BACKEND_URL=$(gcloud run services describe $BACKEND_INSTANCE_NAME --platform managed --region us-central1 --format 'value(status.url)')
-          echo "BACKEND_URL=$BACKEND_URL" >> $GITHUB_ENV
-
-      - name: Save Backend URL as artifact
+          echo $BACKEND_URL > backend_url.txt
+      - name: Upload Backend URL artifact
         uses: actions/upload-artifact@v2
         with:
-          name: backend-url
-          path: backend-url.txt
+          name: backend-url-${{ github.event.number }}
+          path: backend_url.txt
