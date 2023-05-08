@@ -6,6 +6,8 @@ import StudentTableRow from "./StudentTableRow";
 const StudentList = () => {
   const [students, setStudents] = useState([]);
 
+  console.log(process.env.NEXT_PUBLIC_REACT_APP_API_BASE_URL);
+
   useEffect(() => {
     api
       .get("/students/")
