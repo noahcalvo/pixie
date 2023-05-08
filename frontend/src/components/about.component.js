@@ -1,3 +1,4 @@
+// This component imports the readme and renders it.
 import React, { useState, useEffect } from "react";
 import { parse } from "marked";
 
