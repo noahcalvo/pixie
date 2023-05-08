@@ -38,7 +38,7 @@ jobs:
             --platform managed \
             --region us-central1 \
             --allow-unauthenticated \
-            --set-env-vars DATABASE_STRING=${{ secrets.DATABASE_STRING }}
+            --set-env-vars DATABASE_STRING=${{ secrets.DATABASE_STRING_DEV }}
       - name: Get Ephemeral Backend URL and Save to File
         run: |
           BACKEND_URL=$(gcloud run services describe $BACKEND_INSTANCE_NAME --platform managed --region us-central1 --format 'value(status.url)')
