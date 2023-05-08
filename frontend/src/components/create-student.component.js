@@ -42,5 +42,4 @@ const CreateStudent = () => {
   );
 };
 
-// Export CreateStudent Component
 export default CreateStudent;
