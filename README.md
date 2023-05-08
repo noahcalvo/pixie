@@ -97,3 +97,4 @@ export default HomePage;
 To automate the deployment of backend ephemerals, so that the app works when smoke testing a PR, you must tinker with the Service Account set up on GCP. You should have a Service Account under the IAM page with the Principle(email) `github-action-...`. Edit this Account and add `Cloud Build Editor`, `Cloud Run Admin`, `Storage Admin`, `Service Account User` and `Service Usage Consumer` roles.
 
 Also edit the roles of your `default compute service account` (that will be its name),
+.
