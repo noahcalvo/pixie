@@ -67,6 +67,7 @@ jobs:
       - name: Load Backend URL from artifact
         run: |
           BACKEND_URL=$(cat backend_url/backend_url.txt)
+          echo "$BACKEND_URL"
           echo "BACKEND_URL=$BACKEND_URL" >> $GITHUB_ENV
       # TODO: Replace npm install with npm ci once there is a stable package-lock.json and it is removed from .gitignore
       - name: Install dependencies and build frontend code
