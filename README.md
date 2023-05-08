@@ -52,7 +52,7 @@ The package.json's are set up to run locally.
 6. For whitelisting IPs, I've chosen to allow all IPs access. This is an option in the project settings, not cluster.
 7. Go to Deployment>Database>Connect, select connect my app, and copy the connection string.
 8. In backend/.env, add `DATABASE_STRING = "your db string"`
-9. If you want to add a dev database as well, to play with data without affecting prod, repeat steps 2-6 and create a backend/.env.development with the DATABASE_STRING value. You will need to create a new project if you want to create another free m0 cluster, because mongo only allows 1 m0 cluster per project. If you'd like to add this stage databse to your pipeline, create the github actions secret, `DATABASE_STRING_DEV = your-dev-db-string`. If you want to use the prod databse in your PR ephemerals, change the `firebase-hosting-pull-request.yaml file to use `DATABASE_STRING`instead of`DATABASE_STRING_DEV`
+9. If you want to add a dev database as well, to play with data without affecting prod, repeat steps 2-6 and create a backend/.env.development with the DATABASE_STRING value. You will need to create a new project if you want to create another free m0 cluster, because mongo only allows 1 m0 cluster per project. If you'd like to add this stage databse to your pipeline, create the github actions secret, `DATABASE_STRING_DEV = your-dev-db-string`. If you want to use the prod databse in your PR ephemerals, change the `ephemeral-deploy-pr.yaml file to use `DATABASE_STRING`instead of`DATABASE_STRING_DEV`
 10. Add the (prod) database string in your repo settings, Secrets>Actions, and title it DATABASE_STRING. This way it will be added as env during automated deployments. If you're curious how this works, check out the firebase scripts in .github/workflows/
 
 ## Connecting your backend in the cloud
@@ -64,7 +64,7 @@ The package.json's are set up to run locally.
 4. Navigate to the `backend` folder, and run
 
 ```
-gcloud builds submit --tag gcr.io/<PROJECT_ID>/my-backend
+gcloud builds submit --tag gcr.io/<PROJECT_ID>/<prod_backend_name> // prod_backend_name might be my-backend
 gcloud run deploy my-backend --image gcr.io/<PROJECT_ID>/my-backend --platform managed --allow-unauthenticated
 ```
 
@@ -77,6 +77,8 @@ cloudbuild is a good idea in general cause it provides a consistent build enviro
 ## GCP configuration tips
 
 1. If you are like me and afraid of $100+ monthly bills from google, and the slightest excess usage past the free tier fires anxiety into you, Lifecycle management is your friend. The images that are uploaded during cloud build and deploy are put in the `artifacts.[google app id].appspot.com`, i.e. `artifacts.piixie.appspot.com` bucket. To add rules about deleting data from this bucket when it is no longer used, go to https://console.cloud.google.com/storage/lifecycle. Add a rule > delete object > number of newer versions > 1 (or whatever you like, to balance stability with cost).
+
+I will try and add more observability resources to this project for alerts on when GCP exceeds the free tier, etc.
 
 ## Enabling SSR
 
@@ -96,4 +98,4 @@ export default HomePage;
 
 To automate the deployment of backend ephemerals, so that the app works when smoke testing a PR, you must tinker with the Service Account set up on GCP. You should have a Service Account under the IAM page with the Principle(email) `github-action-...`. Edit this Account and add `Cloud Build Editor`, `Cloud Run Admin`, `Storage Admin`, `Service Account User` and `Service Usage Consumer` roles.
 
-Also edit the roles of your `default compute service account` (that will be its name),
+Also edit the roles of your `default compute service account` (that will be its name), ... I lost my train of thought here. I will fix this when I first use this boilerplate to start a new app.
