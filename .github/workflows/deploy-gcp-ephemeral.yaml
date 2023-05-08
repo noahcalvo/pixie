@@ -37,10 +37,7 @@ jobs:
             --set-env-vars DATABASE_STRING=${{ secrets.DATABASE_STRING }}
       - name: Get Ephemeral Backend URL
         run: |
-          BACKEND_URL=$(gcloud run services describe $BACKEND_INSTANCE_NAME \
-          --platform managed \
-          --format 'value(status.url) \
-          --region us-central1 \')
+          BACKEND_URL=$(gcloud run services describe $BACKEND_INSTANCE_NAME --platform managed --format 'value(status.url) --region us-central1')
           echo "BACKEND_URL=$BACKEND_URL" >> $GITHUB_ENV
 
       - name: Save Backend URL as artifact
