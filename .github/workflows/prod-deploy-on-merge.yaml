@@ -29,6 +29,7 @@ jobs:
           gcloud run deploy ${{ vars.PROD_BACKEND }} \
             --image gcr.io/${{ vars.GCP_PROJECT_ID }}/${{ vars.PROD_BACKEND }} \
             --platform managed \
+            --region us-central1 \
             --allow-unauthenticated \
             --set-env-vars DATABASE_STRING=${{ secrets.DATABASE_STRING }}
   deploy-frontend-ephemeral:
