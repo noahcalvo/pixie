@@ -7,7 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    working-directory: backend
 
     steps:
       - uses: actions/checkout@v2
@@ -19,6 +18,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: backend
 
       - name: Run tests
         run: npm test
+        working-directory: backend
