@@ -30,7 +30,7 @@ const EditStudent = (props) => {
       .catch((err) => alert(err));
   };
 
-  // Load data from server and reinitialize student form
+  // Load data from server and reinitialize student form.
   useEffect(() => {
     api
       .get("/students/update-student/" + id)
