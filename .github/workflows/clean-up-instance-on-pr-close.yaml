@@ -24,4 +24,4 @@ jobs:
 
       - name: Delete Ephemeral Backend
         run: |
-          gcloud run services delete $BACKEND_INSTANCE_NAME --platform managed --quiet
+          gcloud run services delete $BACKEND_INSTANCE_NAME --region us-central1 --platform managed --quiet
