@@ -1,0 +1,50 @@
+name: Deploy to GCP and Firebase Production on Merge
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "backend/**"
+      - "frontend/**"
+jobs:
+  deploy-backend-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.3.0
+        with:
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_PIIXIE }}
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Build and push Docker image
+        # I've added the || true to the gcloud build step because it returns exit code 1 which fails the pipeline. Currently a bug in github actions https://github.com/orgs/community/discussions/50221
+        run: |
+          echo "====================" \
+          echo $GCP_PROJECT_ID
+          gcloud builds submit --tag gcr.io/${{ vars.GCP_PROJECT_ID }}/${{ vars.PROD_BACKEND }} || true
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ vars.PROD_BACKEND }} \
+            --image gcr.io/${{ vars.GCP_PROJECT_ID }}/${{ vars.PROD_BACKEND }} \
+            --platform managed \
+            --allow-unauthenticated \
+            --set-env-vars DATABASE_STRING=${{ secrets.DATABASE_STRING }}
+  deploy-frontend-ephemeral:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # TODO: Replace npm install with npm ci once there is a stable package-lock.json and it is removed from .gitignore
+      - name: Install dependencies and build frontend code
+        working-directory: frontend
+        run: npm install && npm run build
+        env:
+          NEXT_PUBLIC_REACT_APP_API_BASE_URL: ${{ vars.REACT_APP_API_BASE_URL }}
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PIIXIE }}"
+          channelId: live
+          projectId: piixie
+          entryPoint: frontend

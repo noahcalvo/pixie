@@ -4,12 +4,12 @@
 import React, { useState, useEffect } from "react";
 import api from "../api";
 import StudentForm from "./StudentForm";
-import { useParams, useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 
 // EditStudent Component
 const EditStudent = (props) => {
-  const navigate = useNavigate();
-  const { id } = useParams();
+  const router = useRouter();
+  const { id } = router.query;
   const [formValues, setFormValues] = useState({
     name: "",
     email: "",
@@ -24,7 +24,7 @@ const EditStudent = (props) => {
         if (res.status === 204) {
           alert("Student successfully updated");
           // navigate(-1) navigates to the previous page, /student-list
-          navigate(-1);
+          router.back();
         } else Promise.reject();
       })
       .catch((err) => alert(err));

@@ -2,12 +2,15 @@
 # access to docker command. You can safely delete this and use
 # docker build -t gcr.io/<your_project_id>/my-backend .
 # docker push gcr.io/<your_project_id>/my-backend
-# before each deploy.
+# before each deploy. You will also need to update the deploy-gcp github action pipelines to
+# use Dockerfile instead of cloudbuild.yaml
 
 steps:
   - name: "gcr.io/cloud-builders/npm"
     args: ["install"]
+    dir: "/workspace/backend" # Set the working directory for the npm step
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/piixie/my-backend", "."]
+    args: ["build", "-t", "gcr.io/$_PROJECT_ID/$_BACKEND_INSTANCE_NAME", "."]
+    dir: "/workspace/backend"
 images:
-  - "gcr.io/piixie/my-backend"
+  - "gcr.io/$_PROJECT_ID/$_BACKEND_INSTANCE_NAME"

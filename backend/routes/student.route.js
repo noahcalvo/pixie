@@ -2,7 +2,6 @@ let mongoose = require("mongoose"),
   express = require("express"),
   router = express.Router();
 
-const { request } = require("../app");
 // Student Model
 let studentSchema = require("../models/Student");
 
@@ -10,8 +9,6 @@ let studentSchema = require("../models/Student");
 router.post("/create-student", async (req, res) => {
   try {
     const result = await studentSchema.create(req.body);
-    console.log(result);
-    console.log(req.body);
     res.status(201).json(result);
   } catch (e) {
     console.log(e);
@@ -36,7 +33,6 @@ router
     try {
       const student = await studentSchema.findById(req.params.id);
       res.status(200).json(student);
-      console.log(student);
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +45,6 @@ router
         $set: req.body,
       });
       res.status(204).json(student);
-      console.log(student);
     } catch (error) {
       console.log(error);
     }

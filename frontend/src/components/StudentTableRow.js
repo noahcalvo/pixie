@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import api from "../api";
 
 const StudentTableRow = (props) => {
@@ -15,7 +15,7 @@ const StudentTableRow = (props) => {
           window.location.reload();
         } else Promise.reject();
       })
-      .catch((err) => alert("Something went wrong"));
+      .catch((err) => alert("Something went wrong: " + err));
   };
 
   return (
@@ -24,7 +24,7 @@ const StudentTableRow = (props) => {
       <td>{email}</td>
       <td>{rollno}</td>
       <td>
-        <Link className="edit-link" to={"/edit-student/" + _id}>
+        <Link href={`/edit-student/${_id}`} passHref>
           Edit
         </Link>
         <Button onClick={deleteStudent} size="sm" variant="danger">

@@ -1,0 +1,82 @@
+name: Deploy to GCP ephemeral and Firebase Hosting on PR for testing
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "backend/**"
+      - "frontend/**"
+
+jobs:
+  deploy-backend-ephemeral:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.3.0
+        with:
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_PIIXIE }}
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set Ephemeral Environment Variables
+        run: |
+          echo "BACKEND_INSTANCE_NAME=my-backend-ephemeral-pr-${{ github.event.number }}" >> $GITHUB_ENV
+      - name: Build and push Docker image
+        # I've added the || true to the gcloud build step because it returns exit code 1 which fails the pipeline. Currently a bug in github actions https://github.com/orgs/community/discussions/50221
+        run: |
+          echo "====================" \
+          echo $GCP_PROJECT_ID
+          gcloud builds submit --config backend/cloudbuild.yaml --substitutions=_BACKEND_INSTANCE_NAME=$BACKEND_INSTANCE_NAME,_PROJECT_ID=${{ vars.GCP_PROJECT_ID }} || true
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy $BACKEND_INSTANCE_NAME \
+            --image gcr.io/${{ vars.GCP_PROJECT_ID }}/$BACKEND_INSTANCE_NAME \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated \
+            --set-env-vars DATABASE_STRING=${{ secrets.DATABASE_STRING_DEV }}
+      - name: Get Ephemeral Backend URL and Save to File
+        run: |
+          BACKEND_URL=$(gcloud run services describe $BACKEND_INSTANCE_NAME --platform managed --region us-central1 --format 'value(status.url)')
+          echo $BACKEND_URL > backend_url.txt
+      - name: Upload Backend URL artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: backend-url-${{ github.event.number }}
+          path: backend_url.txt
+
+  deploy-frontend-ephemeral:
+    if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Wait for backend deployment
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-backend
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: deploy-backend-ephemeral
+          ref: ${{ github.event.pull_request.head.sha }}
+          timeoutSeconds: 1800 # Adjust this value based on how long you expect the backend deployment to take
+      - name: Download Backend URL artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: backend-url-${{ github.event.number }}
+          path: backend_url
+      - name: Load Backend URL from artifact
+        run: |
+          BACKEND_URL=$(cat backend_url/backend_url.txt)
+          echo "BACKEND_URL=$BACKEND_URL" >> $GITHUB_ENV
+      # TODO: Replace npm install with npm ci once there is a stable package-lock.json and it is removed from .gitignore
+      - name: Install dependencies and build frontend code
+        working-directory: frontend
+        run: npm install && npm run build
+        env:
+          NEXT_PUBLIC_REACT_APP_API_BASE_URL: ${{ env.BACKEND_URL }}
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PIIXIE }}"
+          projectId: piixie
+          entryPoint: frontend

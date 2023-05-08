@@ -4,8 +4,8 @@ import "firebase/auth";
 function GoogleSignInButton(props) {
   if (props.user) {
     return (
-      <div>
-        <p>Hello, {props.user.displayName}</p>
+      <div className="sign-in-display">
+        <p className="display-name nav-link">Hello, {props.user.displayName}</p>
         <button onClick={props.signOut}>Sign out</button>
       </div>
     );

@@ -6,24 +6,21 @@
 /frontend/.pnp.js
 /backend/node_modules
 
-# generated scss
+# generated files
+/frontend/public/README.md
 /frontend/src/pixie.css
 /frontend/src/pixie.css.map
+/frontend/.next
 
 # production
 /build
-
-# generated README
-/frontend/src/README.md
+/frontend/build
 
 # env
-/frontend/.env.local
-/frontend/.env.development.local
-/frontend/.env.test.local
-/frontend/.env.production.local
 /backend/.env
-/frontend/.env
-
+/backend/.env.development
+/frontend/.env.production
+/frontend/.env.development
 
 # misc
 .DS_Store

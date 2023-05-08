@@ -1,0 +1,27 @@
+name: Cleanup GCP ephemeral on PR closed
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    paths:
+      - "backend/**"
+      - "frontend/**"
+jobs:
+  cleanup-backend-ephemeral:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.3.0
+        with:
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_PIIXIE }}
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+
+      - name: Set Ephemeral Environment Variables
+        run: |
+          echo "BACKEND_INSTANCE_NAME=my-backend-ephemeral-pr-${{ github.event.number }}" >> $GITHUB_ENV
+
+      - name: Delete Ephemeral Backend
+        run: |
+          gcloud run services delete $BACKEND_INSTANCE_NAME --platform managed --quiet
