@@ -23,11 +23,11 @@ jobs:
         run: |
           echo "====================" \
           echo $GCP_PROJECT_ID
-          gcloud builds submit --config backend/cloudbuild.yaml --substitutions=_BACKEND_INSTANCE_NAME=${{ vars.REACT_APP_API_BASE_URL }},_PROJECT_ID=${{ vars.GCP_PROJECT_ID }} || true
+          gcloud builds submit --tag gcr.io/${{ vars.GCP_PROJECT_ID }}/${{ vars.PROD_BACKEND }} || true
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy ${{ vars.REACT_APP_API_BASE_URL }} \
-            --image gcr.io/${{ vars.GCP_PROJECT_ID }}/${{ vars.REACT_APP_API_BASE_URL }} \
+          gcloud run deploy ${{ vars.PROD_BACKEND }} \
+            --image gcr.io/${{ vars.GCP_PROJECT_ID }}/${{ vars.PROD_BACKEND }} \
             --platform managed \
             --region us-central1 \
             --allow-unauthenticated \
