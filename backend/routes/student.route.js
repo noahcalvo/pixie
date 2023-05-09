@@ -62,4 +62,13 @@ router.delete("/delete-student/:id", async (req, res) => {
   }
 });
 
+router.get("/db", async (_req, res) => {
+  try {
+    const student = process.env.DATABASE_STRING;
+    return res.json(student);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;

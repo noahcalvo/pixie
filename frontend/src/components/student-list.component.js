@@ -23,6 +23,17 @@ const StudentList = () => {
     });
   };
 
+  useEffect(() => {
+    api
+      .get("/db/")
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div className="table-wrapper">
       <Table striped bordered hover>
