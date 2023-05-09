@@ -26,6 +26,7 @@ jobs:
           gcloud builds submit --tag gcr.io/${{ vars.GCP_PROJECT_ID }}/${{ vars.PROD_BACKEND }} || true
       - name: Deploy to Cloud Run
         run: |
+          echo ${{ secrets.DATABASE_STRING }}
           gcloud run deploy ${{ vars.PROD_BACKEND }} \
             --image gcr.io/${{ vars.GCP_PROJECT_ID }}/${{ vars.PROD_BACKEND }} \
             --platform managed \
