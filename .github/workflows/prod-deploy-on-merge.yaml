@@ -19,6 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Build and push Docker image
+        working-directory: backend
         # I've added the || true to the gcloud build step because it returns exit code 1 which fails the pipeline. Currently a bug in github actions https://github.com/orgs/community/discussions/50221
         run: |
           echo "====================" \
