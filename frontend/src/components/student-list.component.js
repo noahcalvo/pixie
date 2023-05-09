@@ -10,7 +10,6 @@ const StudentList = () => {
     api
       .get("/students/")
       .then(({ data }) => {
-        console.log(data);
         setStudents(data);
       })
       .catch((error) => {
@@ -23,17 +22,6 @@ const StudentList = () => {
       return <StudentTableRow obj={res} key={i} />;
     });
   };
-
-  useEffect(() => {
-    api
-      .get("/db/")
-      .then(({ data }) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <div className="table-wrapper">
