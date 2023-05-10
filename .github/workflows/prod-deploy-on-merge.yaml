@@ -28,7 +28,7 @@ jobs:
       - name: Deploy to Cloud Run
         run: |
           echo ${{ secrets.DATABASE_STRING }}
-          gcloud run deploy ${{ vars.PROD_BACKEND }} \
+          URL=$(gcloud run deploy ${{ vars.PROD_BACKEND }} \
             --image gcr.io/${{ vars.GCP_PROJECT_ID }}/${{ vars.PROD_BACKEND }} \
             --platform managed \
             --region us-central1 \
@@ -36,7 +36,7 @@ jobs:
             --set-env-vars DATABASE_STRING=${{ secrets.DATABASE_STRING }} \
             --format "value(status.url)")
           echo "Service URL: $URL"
-  deploy-frontend-ephemeral:
+  deploy-frontend-prod:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
