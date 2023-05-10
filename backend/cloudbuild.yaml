@@ -3,7 +3,7 @@
 # docker build -t gcr.io/<your_project_id>/my-backend .
 # docker push gcr.io/<your_project_id>/my-backend
 # before each deploy. You will also need to update the deploy-gcp github action pipelines to
-# use Dockerfile instead of cloudbuild.yaml.
+# use Dockerfile instead of cloudbuild.yaml
 
 steps:
   - name: "gcr.io/cloud-builders/npm"
