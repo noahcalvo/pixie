@@ -21,6 +21,11 @@ const HeaderNav = () => {
 
             <Nav className="justify-content-end">
               <Nav>
+                <Link className="button-link" href="/pr-testing">
+                  <span className="nav-link">PR Testing</span>
+                </Link>
+              </Nav>
+              <Nav>
                 <Link className="button-link" href="/create-student">
                   <span className="nav-link">Create Student</span>
                 </Link>
