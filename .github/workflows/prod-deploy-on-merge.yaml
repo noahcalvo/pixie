@@ -36,9 +36,6 @@ jobs:
             --set-env-vars DATABASE_STRING=${{ secrets.DATABASE_STRING }} \
             --format "value(status.url)")
           echo "Service URL: $URL"
-      - name: Echo backend url
-      run: |
-        $(gcloud run services describe $BACKEND_INSTANCE_NAME --platform managed --region us-central1 --format 'value(status.url)'
   deploy-frontend-ephemeral:
     runs-on: ubuntu-latest
     steps:
