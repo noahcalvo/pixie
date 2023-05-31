@@ -27,11 +27,14 @@ app.use((_req, res) => {
   res.status(404).send("Error 404!");
 });
 
-// Catch any error that happened in the backend. If no status code resulted, return 500
-app.use(function (err, _req, res) {
-  console.error(err.message);
-  if (!err.statusCode) err.statusCode = 500;
-  res.status(err.statusCode).send(err.message);
+// Error handling middleware
+app.use(function errorHandler(err, req, res, next) {
+  if (err.name === "ValidationError") {
+    res.status(400).json({ error: "Invalid request" });
+  } else {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 // Export it so that server.js can use it

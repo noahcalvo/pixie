@@ -6,12 +6,12 @@ let mongoose = require("mongoose"),
 let studentSchema = require("../models/Student");
 
 // CREATE Student
-router.post("/create-student", async (req, res) => {
+router.post("/create-student", async (req, res, next) => {
   try {
     const result = await studentSchema.create(req.body);
     res.status(201).json(result);
   } catch (e) {
-    console.log(e);
+    next(e);
   }
 });
 

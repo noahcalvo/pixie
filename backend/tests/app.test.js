@@ -10,6 +10,11 @@ const testStudent = {
   rollno: "12345",
 };
 
+const invalidStudent = {
+  name: "Man without email",
+  rollno: "12346",
+};
+
 const mongoServer = new MongoMemoryServer();
 
 beforeAll(async () => {
@@ -43,6 +48,14 @@ describe("Student API", () => {
     expect(res.body.name).toBe(testStudent.name);
     expect(res.body.email).toBe(testStudent.email);
     expect(res.body.rollno).toBe(Number(testStudent.rollno));
+  });
+
+  it("should throw 400 when create-student doesn't contain email in body", async () => {
+    const res = await request(app)
+      .post("/students/create-student")
+      .send(invalidStudent);
+    expect(res.statusCode).toEqual(400);
+    console.log(res.body);
   });
 
   it("should return a list of students", async () => {
