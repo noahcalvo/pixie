@@ -26,17 +26,15 @@ jobs:
         # I've added the || true to the gcloud build step because it returns exit code 1 which fails the pipeline. Currently a bug in github actions https://github.com/orgs/community/discussions/50221
         run: |
           echo "====================" \
-          echo $GCP_PROJECT_ID
           gcloud builds submit --config backend/cloudbuild.yaml --substitutions=_BACKEND_INSTANCE_NAME=$BACKEND_INSTANCE_NAME,_PROJECT_ID=${{ vars.GCP_PROJECT_ID }} || true
       - name: Deploy to Cloud Run
         run: |
-          echo ${{ secrets.DATABASE_STRING }}
           gcloud run deploy $BACKEND_INSTANCE_NAME \
             --image gcr.io/${{ vars.GCP_PROJECT_ID }}/$BACKEND_INSTANCE_NAME \
             --platform managed \
             --region us-central1 \
             --allow-unauthenticated \
-            --set-env-vars DATABASE_STRING=${{ secrets.DATABASE_STRING }}
+            --set-env-vars DATABASE_STRING=${{ secrets.DATABASE_STRING_DEV }}
       - name: Get Ephemeral Backend URL and Save to File
         run: |
           BACKEND_URL=$(gcloud run services describe $BACKEND_INSTANCE_NAME --platform managed --region us-central1 --format 'value(status.url)')
