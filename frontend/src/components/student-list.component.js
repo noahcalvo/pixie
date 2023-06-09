@@ -2,12 +2,19 @@ import React, { useState, useEffect } from "react";
 import api from "../api";
 import { Table, Spinner } from "react-bootstrap";
 import StudentTableRow from "./StudentTableRow";
+import ToastComponent from "./toast";
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState();
 
   useEffect(() => {
+    const message = localStorage.getItem("success");
+    if (message) {
+      setSuccessMessage(message);
+      localStorage.removeItem("success");
+    }
     setLoading(true);
     api
       .get("/students/")
@@ -30,10 +37,13 @@ const StudentList = () => {
 
   return (
     <div className="table-wrapper">
+      {successMessage && <ToastComponent message={successMessage} />}
       {loading ? (
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
+        <div className="spinner-container">
+          <Spinner animation="border" role="status" className="custom-spinner">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
       ) : (
         <Table striped bordered hover>
           <thead>

@@ -43,3 +43,15 @@ header {
   margin-right: 8px;
   color: white;
 }
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* This makes the container take up the full height of the viewport */
+}
+
+.custom-spinner {
+  width: 3rem;
+  height: 3rem;
+}
