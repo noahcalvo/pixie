@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import api from "../api";
-import { Table } from "react-bootstrap";
+import { Table, Spinner } from "react-bootstrap";
 import StudentTableRow from "./StudentTableRow";
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     api
       .get("/students/")
       .then(({ data }) => {
@@ -14,6 +16,9 @@ const StudentList = () => {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -25,17 +30,23 @@ const StudentList = () => {
 
   return (
     <div className="table-wrapper">
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Roll No</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>{DataTable()}</tbody>
-      </Table>
+      {loading ? (
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      ) : (
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Roll No</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>{DataTable()}</tbody>
+        </Table>
+      )}
     </div>
   );
 };
