@@ -6,7 +6,7 @@ import api from "../api";
 import StudentForm from "./StudentForm";
 import { useRouter } from "next/router";
 import { Spinner } from "react-bootstrap";
-import ToastComponent from "./toast";
+import ToastComponent from "./Toast";
 
 // CreateStudent Component
 const CreateStudent = () => {

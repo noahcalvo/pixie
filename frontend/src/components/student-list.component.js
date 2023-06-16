@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../api";
 import { Table, Spinner } from "react-bootstrap";
 import StudentTableRow from "./StudentTableRow";
-import ToastComponent from "./toast";
+import ToastComponent from "./Toast";
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
