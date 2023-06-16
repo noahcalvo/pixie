@@ -26,6 +26,8 @@ jobs:
         run: gcloud config list
       - name: Print gcloud auth list
         run: gcloud auth list
+      - name: list env
+        run: env
       - name: Build and push Docker image
         # I've added the || true to the gcloud build step because it returns exit code 1 which fails the pipeline. Currently a bug in github actions https://github.com/orgs/community/discussions/50221
         run: |
