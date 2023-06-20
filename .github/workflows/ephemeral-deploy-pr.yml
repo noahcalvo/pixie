@@ -46,6 +46,7 @@ jobs:
         run: |
           BACKEND_URL=$(gcloud run services describe $BACKEND_INSTANCE_NAME --platform managed --region us-central1 --format 'value(status.url)')
           echo $BACKEND_URL > backend_url.txt
+          echo $BACKEND_URL
       - name: Upload Backend URL artifact
         uses: actions/upload-artifact@v2
         with:
@@ -74,6 +75,7 @@ jobs:
         run: |
           BACKEND_URL=$(cat backend_url/backend_url.txt)
           echo "BACKEND_URL=$BACKEND_URL" >> $GITHUB_ENV
+          echo $BACKEND_URL
       # TODO: Replace npm install with npm ci once there is a stable package-lock.json and it is removed from .gitignore
       - name: Install dependencies and build frontend code
         working-directory: frontend
