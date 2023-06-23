@@ -43,3 +43,27 @@ header {
   margin-right: 8px;
   color: white;
 }
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* This makes the container take up the full height of the viewport */
+}
+
+.custom-spinner {
+  width: 3rem;
+  height: 3rem;
+}
+
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 999; // Ensure the toasts appear on top of other elements
+  min-width: 200px; /* adjust as needed */
+  min-height: 50px; /* adjust as needed */
+}
