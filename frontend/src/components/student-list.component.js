@@ -8,6 +8,7 @@ const StudentList = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState();
+  const [deletionMessage, setDeletionMessage] = useState();
 
   useEffect(() => {
     const message = localStorage.getItem("success");
@@ -29,15 +30,35 @@ const StudentList = () => {
       });
   }, []);
 
+  const deleteStudent = (id) => {
+    return api
+      .delete("/students/delete-student/" + id)
+      .then(() => {
+        setStudents(students.filter((student) => student._id !== id));
+        setDeletionMessage("Student successfully deleted");
+      })
+      .catch((err) => {
+        console.error(err);
+        setDeletionMessage("Failed to delete student");
+      });
+  };
+
   const DataTable = () => {
     return students.map((res, i) => {
-      return <StudentTableRow obj={res} key={i} />;
+      return (
+        <StudentTableRow student={res} key={i} deleteStudent={deleteStudent} />
+      );
     });
   };
 
   return (
     <div className="table-wrapper">
-      {successMessage && <ToastComponent message={successMessage} />}
+      {/* Toast Container */}
+      <div className="toast-container">
+        {deletionMessage && <ToastComponent message={deletionMessage} />}
+        {successMessage && <ToastComponent message={successMessage} />}
+      </div>
+      {/* Loading placeholder */}
       {loading ? (
         <div className="spinner-container">
           <Spinner animation="border" role="status" className="custom-spinner">
