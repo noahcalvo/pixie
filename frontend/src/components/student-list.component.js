@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
+import { getStudents, deleteStudent } from "../api/studentAPI";
 import { Table, Spinner } from "react-bootstrap";
 import StudentTableRow from "./StudentTableRow";
 import ToastComponent from "./Toast";
@@ -17,8 +17,7 @@ const StudentList = () => {
       localStorage.removeItem("success");
     }
     setLoading(true);
-    api
-      .get("/students/")
+    getStudents()
       .then(({ data }) => {
         setStudents(data);
       })
@@ -31,8 +30,7 @@ const StudentList = () => {
   }, []);
 
   const deleteStudent = (id) => {
-    return api
-      .delete("/students/delete-student/" + id)
+    return deleteStudent(id)
       .then(() => {
         setStudents(students.filter((student) => student._id !== id));
         setDeletionMessage("Student successfully deleted");

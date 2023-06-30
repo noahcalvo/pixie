@@ -2,11 +2,11 @@
 
 // Import Modules
 import React, { useState } from "react";
-import api from "../api";
 import StudentForm from "./StudentForm";
 import { useRouter } from "next/router";
 import { Spinner } from "react-bootstrap";
 import ToastComponent from "./Toast";
+import { createStudent } from "../api/studentAPI";
 
 // CreateStudent Component
 const CreateStudent = () => {
@@ -21,8 +21,7 @@ const CreateStudent = () => {
   // onSubmit handler
   const onSubmit = (studentObject) => {
     setLoading(true);
-    api
-      .post("/students/create-student", studentObject)
+    createStudent(studentObject)
       .then((res) => {
         if (res.status === 201) {
           localStorage.setItem("success", "Student successfully created");

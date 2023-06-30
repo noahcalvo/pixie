@@ -2,9 +2,9 @@
 
 // Import Modules
 import React, { useState, useEffect } from "react";
-import api from "../api";
 import StudentForm from "./StudentForm";
 import { useRouter } from "next/router";
+import { editStudent, updateStudent } from "../api/studentAPI";
 
 // EditStudent Component
 const EditStudent = (props) => {
@@ -18,8 +18,7 @@ const EditStudent = (props) => {
 
   //onSubmit handler
   const onSubmit = (studentObject) => {
-    api
-      .put("/students/update-student/" + id, studentObject)
+    updateStudent(studentObject)
       .then((res) => {
         if (res.status === 204) {
           alert("Student successfully updated");
@@ -32,8 +31,7 @@ const EditStudent = (props) => {
 
   // Load data from server and reinitialize student form
   useEffect(() => {
-    api
-      .get("/students/update-student/" + id)
+    editStudent(id)
       .then((res) => {
         const { name, email, rollno } = res.data;
         setFormValues({ name, email, rollno });
