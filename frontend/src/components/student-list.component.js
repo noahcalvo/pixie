@@ -29,22 +29,25 @@ const StudentList = () => {
       });
   }, []);
 
-  const deleteStudent = (id) => {
-    return deleteStudent(id)
-      .then(() => {
-        setStudents(students.filter((student) => student._id !== id));
-        setDeletionMessage("Student successfully deleted");
-      })
-      .catch((err) => {
-        console.error(err);
-        setDeletionMessage("Failed to delete student");
-      });
+  const deleteSelectedStudent = async (id) => {
+    try {
+      await deleteStudent(id);
+      setStudents(students.filter((student) => student._id !== id));
+      setDeletionMessage("Student successfully deleted");
+    } catch (err) {
+      console.error(err);
+      setDeletionMessage("Failed to delete student");
+    }
   };
 
   const DataTable = () => {
     return students.map((res, i) => {
       return (
-        <StudentTableRow student={res} key={i} deleteStudent={deleteStudent} />
+        <StudentTableRow
+          student={res}
+          key={i}
+          deleteStudent={deleteSelectedStudent}
+        />
       );
     });
   };

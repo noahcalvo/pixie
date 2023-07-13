@@ -1,10 +1,12 @@
 $theme-colors: (
     "dark": #4a4eab,
-    "light": #d65292
+    "light": #d65292,
 );
 
 // Import Bootstrap after setting the theme colors
 @import "~bootstrap/scss/bootstrap";
+
+$trans: rgba(255, 255, 255, 0.55);
 
 
 * {
@@ -66,4 +68,9 @@ header {
   z-index: 999; // Ensure the toasts appear on top of other elements
   min-width: 200px; /* adjust as needed */
   min-height: 50px; /* adjust as needed */
+}
+
+.btn-lg {
+  color: $trans;
+  margin: min(6px, 2%);
 }

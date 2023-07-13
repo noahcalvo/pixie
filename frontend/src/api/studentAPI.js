@@ -5,6 +5,7 @@ const api = axios.create({
 });
 
 export const getStudents = () => {
+  console.log(api);
   return api.get("/students/");
 };
 
@@ -20,8 +21,13 @@ export const updateStudent = (studentObject) => {
   return api.put("/students/update-student/" + studentObject.id, studentObject);
 };
 
-export const createStudent = (studentObject) => {
-  return api.post(studentObject);
+export const createStudent = async (studentObject) => {
+  console.log(studentObject);
+  try {
+    return await api.post("/students/create-student", studentObject);
+  } catch (e) {
+    return console.log(e);
+  }
 };
 
 export default api;

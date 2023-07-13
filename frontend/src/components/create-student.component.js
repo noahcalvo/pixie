@@ -7,12 +7,13 @@ import { useRouter } from "next/router";
 import { Spinner } from "react-bootstrap";
 import ToastComponent from "./Toast";
 import { createStudent } from "../api/studentAPI";
+import DefaultStudentButton from "./default-student-button.component";
 
 // CreateStudent Component
 const CreateStudent = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [failedUploadMsg, setFailedUploadMsg] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
   const formValues = {
     name: "",
     email: "",
@@ -27,10 +28,39 @@ const CreateStudent = () => {
           localStorage.setItem("success", "Student successfully created");
           router.push("/student-list");
         } else {
-          setFailedUploadMsg("Request failed with status " + res.status);
+          console.log(res.status);
+          setToastMessage("Request failed with status " + res.status);
         }
       })
-      .catch((err) => setFailedUploadMsg("Something went wrong\n" + err))
+      .catch((err) => {
+        console.log(err);
+        setToastMessage("Something went wrong\n" + err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const createDefaultStudent = () => {
+    setLoading(true);
+    const defaultStudent = {
+      name: "Default Student",
+      email: "default@example.com",
+      rollno: 0,
+    };
+    createStudent(defaultStudent)
+      .then((res) => {
+        if (res.status === 201) {
+          setToastMessage("Student created!");
+        } else {
+          console.log(res.status);
+          setToastMessage("Request failed with status " + res.status);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setToastMessage("Something went wrong\n" + err);
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -39,7 +69,7 @@ const CreateStudent = () => {
   // Return student form
   return (
     <div>
-      {failedUploadMsg && <ToastComponent message={failedUploadMsg} />}
+      {toastMessage && <ToastComponent message={toastMessage} />}
       {loading ? (
         <div className="spinner-container">
           <Spinner animation="border" role="status" className="custom-spinner">
@@ -47,13 +77,16 @@ const CreateStudent = () => {
           </Spinner>
         </div>
       ) : (
-        <StudentForm
-          initialValues={formValues}
-          onSubmit={onSubmit}
-          enableReinitialize
-        >
-          Create Student
-        </StudentForm>
+        <div>
+          <StudentForm
+            initialValues={formValues}
+            onSubmit={onSubmit}
+            enableReinitialize
+          >
+            Create Student
+          </StudentForm>
+          <DefaultStudentButton onClick={createDefaultStudent} />
+        </div>
       )}{" "}
     </div>
   );
