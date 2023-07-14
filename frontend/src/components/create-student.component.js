@@ -53,7 +53,7 @@ const CreateStudent = () => {
         if (res.status === 201) {
           setToastMessage("Student created!");
         } else {
-          console.log(res.status);
+          console.log(res.message);
           setToastMessage("Request failed with status " + res.status);
         }
       })

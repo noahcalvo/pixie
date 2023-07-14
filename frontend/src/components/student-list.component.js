@@ -19,6 +19,7 @@ const StudentList = () => {
     setLoading(true);
     getStudents()
       .then(({ data }) => {
+        console.log(data);
         setStudents(data);
       })
       .catch((error) => {
