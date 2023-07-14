@@ -18,7 +18,7 @@ const EditStudent = (props) => {
 
   //onSubmit handler
   const onSubmit = (studentObject) => {
-    updateStudent(studentObject)
+    updateStudent(studentObject, id)
       .then((res) => {
         if (res.status === 204) {
           alert("Student successfully updated");

@@ -5,7 +5,6 @@ const api = axios.create({
 });
 
 export const getStudents = () => {
-  console.log(api);
   return api.get("/students/");
 };
 
@@ -17,8 +16,9 @@ export const editStudent = (id) => {
   return api.get("/students/update-student/" + id);
 };
 
-export const updateStudent = (studentObject) => {
-  return api.put("/students/update-student/" + studentObject.id, studentObject);
+export const updateStudent = (studentObject, id) => {
+  console.log(studentObject);
+  return api.put("/students/update-student/" + id, studentObject);
 };
 
 export const createStudent = async (studentObject) => {
