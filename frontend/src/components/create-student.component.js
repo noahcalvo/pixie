@@ -2,36 +2,74 @@
 
 // Import Modules
 import React, { useState } from "react";
-import api from "../api";
 import StudentForm from "./StudentForm";
 import { useRouter } from "next/router";
 import { Spinner } from "react-bootstrap";
 import ToastComponent from "./Toast";
+import { createStudent } from "../api/studentAPI";
+import DefaultStudentButton from "./default-student-button.component";
 
 // CreateStudent Component
 const CreateStudent = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [failedUploadMsg, setFailedUploadMsg] = useState("");
+  const [toastMessages, setToastMessages] = useState([]);
   const formValues = {
     name: "",
     email: "",
     rollno: "",
   };
+
+  const addToast = (message) => {
+    setToastMessages((messages) => [...messages, message]);
+  };
+
+  const removeToast = (message) => {
+    setToastMessages((messages) => messages.filter((m) => m !== message));
+  };
+
   // onSubmit handler
   const onSubmit = (studentObject) => {
     setLoading(true);
-    api
-      .post("/students/create-student", studentObject)
+    createStudent(studentObject)
       .then((res) => {
         if (res.status === 201) {
           localStorage.setItem("success", "Student successfully created");
           router.push("/student-list");
         } else {
-          setFailedUploadMsg("Request failed with status " + res.status);
+          console.log(res.status);
+          addToast("Request failed with status " + res.status);
         }
       })
-      .catch((err) => setFailedUploadMsg("Something went wrong\n" + err))
+      .catch((err) => {
+        console.log(err);
+        addToast("Something went wrong\n" + err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const createDefaultStudent = () => {
+    setLoading(true);
+    const defaultStudent = {
+      name: "Default Student",
+      email: "default@example.com",
+      rollno: 0,
+    };
+    createStudent(defaultStudent)
+      .then((res) => {
+        if (res.status === 201) {
+          addToast("Default student created!");
+        } else {
+          console.log(res.message);
+          addToast("Request failed with status " + res.status);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        addToast("Something went wrong\n" + err);
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -40,7 +78,15 @@ const CreateStudent = () => {
   // Return student form
   return (
     <div>
-      {failedUploadMsg && <ToastComponent message={failedUploadMsg} />}
+      <div className="toast-container">
+        {toastMessages.map((message, index) => (
+          <ToastComponent
+            key={index}
+            message={message}
+            removeToast={removeToast}
+          />
+        ))}
+      </div>
       {loading ? (
         <div className="spinner-container">
           <Spinner animation="border" role="status" className="custom-spinner">
@@ -48,13 +94,16 @@ const CreateStudent = () => {
           </Spinner>
         </div>
       ) : (
-        <StudentForm
-          initialValues={formValues}
-          onSubmit={onSubmit}
-          enableReinitialize
-        >
-          Create Student
-        </StudentForm>
+        <div>
+          <StudentForm
+            initialValues={formValues}
+            onSubmit={onSubmit}
+            enableReinitialize
+          >
+            Create Student
+          </StudentForm>
+          <DefaultStudentButton onClick={createDefaultStudent} />
+        </div>
       )}{" "}
     </div>
   );

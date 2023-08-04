@@ -2,9 +2,9 @@
 
 // Import Modules
 import React, { useState, useEffect } from "react";
-import api from "../api";
 import StudentForm from "./StudentForm";
 import { useRouter } from "next/router";
+import { editStudent, updateStudent } from "../api/studentAPI";
 
 // EditStudent Component
 const EditStudent = (props) => {
@@ -18,13 +18,11 @@ const EditStudent = (props) => {
 
   //onSubmit handler
   const onSubmit = (studentObject) => {
-    api
-      .put("/students/update-student/" + id, studentObject)
+    updateStudent(studentObject, id)
       .then((res) => {
         if (res.status === 204) {
-          alert("Student successfully updated");
-          // navigate(-1) navigates to the previous page, /student-list
-          router.back();
+          localStorage.setItem("success", "Student successfully updated");
+          router.push("/student-list");
         } else Promise.reject();
       })
       .catch((err) => alert(err));
@@ -32,8 +30,7 @@ const EditStudent = (props) => {
 
   // Load data from server and reinitialize student form
   useEffect(() => {
-    api
-      .get("/students/update-student/" + id)
+    editStudent(id)
       .then((res) => {
         const { name, email, rollno } = res.data;
         setFormValues({ name, email, rollno });

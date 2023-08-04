@@ -9,11 +9,13 @@ The vision is to create a verbose skeleton project that can be used to jumpstart
 This will save time that would usually be spent initializing React, Express, nodeJS and Mongo, as well as setting up a test suite.<br/>
 As the project continues to grow, I hope to add more features such as:
 
-- an authentication suite
-- a deployment pipeline
-- hosting instructions
-- a sample README. Bon voyage!
-- GPT PR review bot integration
+- [ ] an authentication suite
+- [x] a deployment pipeline
+- [x] hosting instructions (need to test them by creating a fork. Please provide feedback if you run into issues.)
+- [ ] a sample README.
+- [ ] GPT PR review bot integration
+
+Bon voyage!
 
 ## Running Locally
 

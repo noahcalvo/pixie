@@ -5,7 +5,7 @@ function GoogleSignInButton(props) {
   if (props.user) {
     return (
       <div className="sign-in-display">
-        <p className="display-name nav-link">Hello {props.user.displayName}</p>
+        <p className="display-name">Hello {props.user.displayName}</p>
         <button onClick={props.signOut}>Sign out</button>
       </div>
     );

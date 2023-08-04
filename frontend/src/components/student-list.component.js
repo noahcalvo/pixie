@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
+import { getStudents, deleteStudent } from "../api/studentAPI";
 import { Table, Spinner } from "react-bootstrap";
 import StudentTableRow from "./StudentTableRow";
 import ToastComponent from "./Toast";
@@ -7,19 +7,26 @@ import ToastComponent from "./Toast";
 const StudentList = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState();
-  const [deletionMessage, setDeletionMessage] = useState();
+  const [toastMessages, setToastMessages] = useState([]);
+
+  const addToast = (message) => {
+    setToastMessages((messages) => [...messages, message]);
+  };
+
+  const removeToast = (message) => {
+    setToastMessages((messages) => messages.filter((m) => m !== message));
+  };
 
   useEffect(() => {
     const message = localStorage.getItem("success");
     if (message) {
-      setSuccessMessage(message);
+      addToast(message);
       localStorage.removeItem("success");
     }
     setLoading(true);
-    api
-      .get("/students/")
+    getStudents()
       .then(({ data }) => {
+        console.log(data);
         setStudents(data);
       })
       .catch((error) => {
@@ -30,23 +37,25 @@ const StudentList = () => {
       });
   }, []);
 
-  const deleteStudent = (id) => {
-    return api
-      .delete("/students/delete-student/" + id)
-      .then(() => {
-        setStudents(students.filter((student) => student._id !== id));
-        setDeletionMessage("Student successfully deleted");
-      })
-      .catch((err) => {
-        console.error(err);
-        setDeletionMessage("Failed to delete student");
-      });
+  const deleteSelectedStudent = async (id) => {
+    try {
+      await deleteStudent(id);
+      setStudents(students.filter((student) => student._id !== id));
+      addToast("Student successfully deleted");
+    } catch (err) {
+      console.error(err);
+      addToast("Failed to delete student");
+    }
   };
 
   const DataTable = () => {
     return students.map((res, i) => {
       return (
-        <StudentTableRow student={res} key={i} deleteStudent={deleteStudent} />
+        <StudentTableRow
+          student={res}
+          key={i}
+          deleteStudent={deleteSelectedStudent}
+        />
       );
     });
   };
@@ -55,8 +64,13 @@ const StudentList = () => {
     <div className="table-wrapper">
       {/* Toast Container */}
       <div className="toast-container">
-        {deletionMessage && <ToastComponent message={deletionMessage} />}
-        {successMessage && <ToastComponent message={successMessage} />}
+        {toastMessages.map((message, index) => (
+          <ToastComponent
+            key={index}
+            message={message}
+            removeToast={removeToast}
+          />
+        ))}
       </div>
       {/* Loading placeholder */}
       {loading ? (
