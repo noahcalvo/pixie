@@ -21,6 +21,6 @@ jobs:
           # Optional
           LANGUAGE: English
           # Play with these to get desired randomness. Ask chatGPT for explinations if you don't know what they do
-          MODEL: gpt-3.5-turbo
+          MODEL: gpt-4
           top_p: .9
           temperature: .9
