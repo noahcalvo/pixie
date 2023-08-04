@@ -13,12 +13,21 @@ import DefaultStudentButton from "./default-student-button.component";
 const CreateStudent = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [toastMessages, setToastMessages] = useState([]);
   const formValues = {
     name: "",
     email: "",
     rollno: "",
   };
+
+  const addToast = (message) => {
+    setToastMessages((messages) => [...messages, message]);
+  };
+
+  const removeToast = (message) => {
+    setToastMessages((messages) => messages.filter((m) => m !== message));
+  };
+
   // onSubmit handler
   const onSubmit = (studentObject) => {
     setLoading(true);
@@ -29,12 +38,12 @@ const CreateStudent = () => {
           router.push("/student-list");
         } else {
           console.log(res.status);
-          setToastMessage("Request failed with status " + res.status);
+          addToast("Request failed with status " + res.status);
         }
       })
       .catch((err) => {
         console.log(err);
-        setToastMessage("Something went wrong\n" + err);
+        addToast("Something went wrong\n" + err);
       })
       .finally(() => {
         setLoading(false);
@@ -51,15 +60,15 @@ const CreateStudent = () => {
     createStudent(defaultStudent)
       .then((res) => {
         if (res.status === 201) {
-          setToastMessage("Student created!");
+          addToast("Default student created!");
         } else {
           console.log(res.message);
-          setToastMessage("Request failed with status " + res.status);
+          addToast("Request failed with status " + res.status);
         }
       })
       .catch((err) => {
         console.log(err);
-        setToastMessage("Something went wrong\n" + err);
+        addToast("Something went wrong\n" + err);
       })
       .finally(() => {
         setLoading(false);
@@ -69,7 +78,15 @@ const CreateStudent = () => {
   // Return student form
   return (
     <div>
-      {toastMessage && <ToastComponent message={toastMessage} />}
+      <div className="toast-container">
+        {toastMessages.map((message, index) => (
+          <ToastComponent
+            key={index}
+            message={message}
+            removeToast={removeToast}
+          />
+        ))}
+      </div>
       {loading ? (
         <div className="spinner-container">
           <Spinner animation="border" role="status" className="custom-spinner">

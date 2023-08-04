@@ -7,13 +7,20 @@ import ToastComponent from "./Toast";
 const StudentList = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState();
-  const [deletionMessage, setDeletionMessage] = useState();
+  const [toastMessages, setToastMessages] = useState([]);
+
+  const addToast = (message) => {
+    setToastMessages((messages) => [...messages, message]);
+  };
+
+  const removeToast = (message) => {
+    setToastMessages((messages) => messages.filter((m) => m !== message));
+  };
 
   useEffect(() => {
     const message = localStorage.getItem("success");
     if (message) {
-      setSuccessMessage(message);
+      addToast(message);
       localStorage.removeItem("success");
     }
     setLoading(true);
@@ -34,10 +41,10 @@ const StudentList = () => {
     try {
       await deleteStudent(id);
       setStudents(students.filter((student) => student._id !== id));
-      setDeletionMessage("Student successfully deleted");
+      addToast("Student successfully deleted");
     } catch (err) {
       console.error(err);
-      setDeletionMessage("Failed to delete student");
+      addToast("Failed to delete student");
     }
   };
 
@@ -57,8 +64,13 @@ const StudentList = () => {
     <div className="table-wrapper">
       {/* Toast Container */}
       <div className="toast-container">
-        {deletionMessage && <ToastComponent message={deletionMessage} />}
-        {successMessage && <ToastComponent message={successMessage} />}
+        {toastMessages.map((message, index) => (
+          <ToastComponent
+            key={index}
+            message={message}
+            removeToast={removeToast}
+          />
+        ))}
       </div>
       {/* Loading placeholder */}
       {loading ? (
