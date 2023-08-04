@@ -21,9 +21,8 @@ const EditStudent = (props) => {
     updateStudent(studentObject, id)
       .then((res) => {
         if (res.status === 204) {
-          alert("Student successfully updated");
-          // navigate(-1) navigates to the previous page, /student-list
-          router.back();
+          localStorage.setItem("success", "Student successfully updated");
+          router.push("/student-list");
         } else Promise.reject();
       })
       .catch((err) => alert(err));
